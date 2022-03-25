@@ -1,0 +1,93 @@
+//Enter code here
+function runProgram(input){
+    input=input.trim().split("\n")
+    let n=+input[0];
+    let arr=input[1].trim().split(" ").map(Number);
+    let left=0;
+    let right=n-1;
+    let x=(merge(arr,left,right))
+    // x=x.sort();
+    console.log(x.join(" "))
+    
+}
+function merge(arr,left,right)
+{
+    if(left==right)
+    {
+       
+        return arr;
+    }
+ if(left<right)
+ {
+    let mid=Math.floor((right+left)/2);
+    merge(arr,left,mid);
+    merge(arr,mid+1,right)
+    mergesort(arr,left,right,mid)
+}
+    return arr;
+}
+function mergesort(arr,left,right,mid)
+{
+    let arr1=[];
+    let arr2=[];
+    for(let i=left;i<=mid;i++)
+    {
+        arr1.push(arr[i]);
+        
+    }
+     for(let i=mid+1;i<=right;i++)
+    {
+        arr2.push(arr[i]);
+    }
+   // console.log(arr1);
+   // console.log(arr2);
+    let current=left;
+    let i=0;
+    let j=0;
+    while(i<arr1.length && j<arr2.length){
+        if(arr1[i]<=arr2[j])
+        {
+            arr[current]=arr1[i];
+            i++;
+        }
+        else
+        {
+            arr[current]=arr2[j];
+            j++;
+        }
+        current++;
+    }
+    while(i<arr1.length)
+    {
+        arr[current]=arr1[i];
+        i++;
+        current++;
+        
+    }
+    while(j<arr2.length)
+    {
+        arr[current]=arr2[j];
+        j++;
+        current++
+    }
+}
+if (process.env.USER === "") {
+  runProgram(``);
+} else {
+  process.stdin.resume();
+  process.stdin.setEncoding("ascii");
+  let read = "";
+  process.stdin.on("data", function (input) {
+    read += input;
+  });
+  process.stdin.on("end", function () {
+    read = read.replace(/\n$/, "");
+    read = read.replace(/\n$/, "");
+    runProgram(read);
+  });
+  process.on("SIGINT", function () {
+    read = read.replace(/\n$/, "");
+    runProgram(read);
+    process.exit(0);
+  });
+}
